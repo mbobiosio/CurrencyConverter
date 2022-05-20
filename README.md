@@ -17,6 +17,13 @@ There are a few ways to open this project.
 2. Open `Android Studio` and select `File | Open...` from the menu. Select cloned directory and press `Open` button
 3. Build the project and run on an android device or emulator
 
+You need to supply API key for conversions. You can get a free api key from `getgeoapi.com`.
+
+When you obtain the key, you can provide them to the app by putting the following in the `local.properties` project root file:
+```properties
+apiKey = "insert key here"
+```
+
 ## Screenshots
 <img src="assets/home_screen.png" alt="Home" width="250">
 
