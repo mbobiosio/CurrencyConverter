@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_timeline"
+        android:title="@string/home"/>
+
+    <item
+        android:id="@+id/ratesFragment"
+        android:icon="@drawable/ic_stacked_line_chart"
+        android:title="@string/rates"/>
+
+    <item
+        android:id="@+id/aboutFragment"
+        android:icon="@drawable/ic_more_horiz"
+        android:title="@string/about"/>
+
+</menu>

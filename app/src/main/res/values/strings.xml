@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Converter</string>
+    <string name="home">Home</string>
+    <string name="rates">Rates</string>
+    <string name="about">About</string>
+    <string name="currency">Currency</string>
+    <string name="currency_hint">USD</string>
+    <string name="refresh">refresh</string>
+    <string name="convert">Convert</string>
+    <string name="converter">Converter</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="amount">Amount</string>
+    <string name="result">Result</string>
+    <string name="converted_value">100</string>
+    <string name="tagline">Convert your currency now!</string>
+    <string name="start">Start</string>
+    <string name="conversion_details">Convert your currency into more than 100+ countries currency. Easy and free.</string>
+    <string name="under_construction">Under Construction</string>
+</resources>

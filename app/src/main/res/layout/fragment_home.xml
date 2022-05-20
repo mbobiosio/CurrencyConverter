@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="?colorSecondaryContainer" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_72sdp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/app_name"
+        android:textSize="@dimen/_16ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_72sdp"
+        android:text="@string/from"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintStart_toStartOf="@+id/sourceCurrencies"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <com.skydoves.powerspinner.PowerSpinnerView
+        android:id="@+id/sourceCurrencies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:background="?colorSurfaceVariant"
+        android:gravity="start"
+        android:hint="@string/currency_hint"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintEnd_toStartOf="@+id/amountInput"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/source"
+        app:spinner_arrow_padding="@dimen/_8sdp"
+        app:spinner_popup_background="?colorSurfaceVariant" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amountInput"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?colorSurfaceVariant"
+        android:hint="@string/amount"
+        app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+        app:boxCornerRadiusTopStart="@dimen/_44sdp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sourceCurrencies"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sourceCurrencies"
+        app:layout_constraintTop_toTopOf="@+id/sourceCurrencies">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/newCurrencyTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/to"
+        app:layout_constraintStart_toStartOf="@+id/sourceCurrencies"
+        app:layout_constraintTop_toBottomOf="@+id/sourceCurrencies" />
+
+    <com.skydoves.powerspinner.PowerSpinnerView
+        android:id="@+id/newCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/currency_hint"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="@+id/sourceCurrencies"
+        app:layout_constraintStart_toStartOf="@+id/newCurrencyTxt"
+        app:layout_constraintTop_toBottomOf="@+id/newCurrencyTxt"
+        app:spinner_popup_background="?colorSurfaceVariant" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnConvert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="@dimen/_72sdp"
+        android:text="@string/convert"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/newCurrency"
+        app:layout_constraintEnd_toEndOf="@+id/amountInput"
+        app:layout_constraintTop_toTopOf="@+id/newCurrency"
+        tools:text="1.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
