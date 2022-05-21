@@ -1,18 +1,17 @@
 package com.mbobiosio.currencyconverter.util
 
-import android.app.Activity
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
 import com.mbobiosio.currencyconverter.model.Rates
 
 /**
@@ -25,11 +24,6 @@ fun convertRates(rates: Map<String, Rates>): Double {
 
 fun convertRateToString(rate: Double?): String {
     return String.format("%, .2f", rate)
-}
-
-fun Snackbar.withColor(@ColorInt colorInt: Int): Snackbar {
-    this.view.setBackgroundColor(colorInt)
-    return this
 }
 
 fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
@@ -84,14 +78,19 @@ fun Context.isNetworkAvailable(): Boolean {
     return false
 }
 
-fun hideKeyboard(activity: Activity) {
-    val imm: InputMethodManager =
-        activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-    // Find the currently focused view, so we can grab the correct window token from it.
-    var view: View? = activity.currentFocus
-    // If no view currently has focus, create a new one, just so we can grab a window token from it
-    if (view == null) {
-        view = View(activity)
+fun View.hideKeyboard() {
+    val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun EditText.onAction(action: Int, runAction: () -> Unit) {
+    this.setOnEditorActionListener { _, actionId, _ ->
+        return@setOnEditorActionListener when (actionId) {
+            action -> {
+                runAction.invoke()
+                true
+            }
+            else -> false
+        }
     }
-    imm.hideSoftInputFromWindow(view.windowToken, 0)
 }

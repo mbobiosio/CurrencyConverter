@@ -25,7 +25,7 @@ apiKey = "insert key here"
 ```
 
 ## Screenshots
-<img src="assets/home_screen.png" alt="Home" width="250">
+<img src="assets/home_screen.png" alt="Home" width="250"> <img src="assets/rates.png" alt="Exchange rates" width="250">
 
 ### Author
 

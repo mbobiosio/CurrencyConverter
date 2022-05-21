@@ -7,6 +7,7 @@ import okio.IOException
 import retrofit2.HttpException
 import timber.log.Timber
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 /**
  * @Author Mbuodile Obiosio
@@ -20,11 +21,13 @@ suspend fun <T> safeApiCall(
     } catch (t: Throwable) {
         when (t) {
             is SocketTimeoutException -> {
-                ResourceState.NetworkError("Timed out")
+                ResourceState.NetworkError("The connection request timed out. Please check your internet signal strength")
             }
-
+            is UnknownHostException -> {
+                ResourceState.NetworkError("No active internet connection")
+            }
             is IOException -> ResourceState.NetworkError(
-                t.message
+                "Connection detected without Internet access"
             )
             is HttpException -> {
                 val code = t.code()
