@@ -19,7 +19,7 @@ import com.mbobiosio.currencyconverter.model.Rates
  * https://linktr.ee/mbobiosio
  */
 fun convertRates(rates: Map<String, Rates>): Double {
-    return rates.values.lastOrNull()?.rate ?: 0.0
+    return rates.values.lastOrNull()?.rateForAmount ?: 0.0
 }
 
 fun convertRateToString(rate: Double?): String {

@@ -92,9 +92,9 @@ class CurrenciesFragment : BaseBindingFragment() {
                     val exchange = response.data.rates.map { entries ->
                         Currencies(
                             entries.key,
-                            entries.value.currency_name,
+                            entries.value.currencyName,
                             entries.value.rate,
-                            entries.value.rate_for_amount
+                            entries.value.rateForAmount
                         )
                     }.sortedBy { currency ->
                         currency.currency

@@ -11,16 +11,16 @@ import com.squareup.moshi.JsonClass
 data class ConversionResponse(
 
     @Json(name = "base_currency_code")
-    val base_currency_code: String,
+    val baseCurrencyCode: String,
 
     @Json(name = "base_currency_name")
-    val base_currency_name: String,
+    val baseCurrencyName: String,
 
     @Json(name = "amount")
     val amount: String,
 
     @Json(name = "updated_date")
-    val updated_date: String,
+    val updatedDate: String,
 
     @Json(name = "rates")
     var rates: Map<String, Rates>,

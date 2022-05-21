@@ -2,7 +2,6 @@ package com.mbobiosio.currencyconverter.repository
 
 import com.mbobiosio.currencyconverter.model.ConversionResponse
 import com.mbobiosio.currencyconverter.model.CurrencyResponse
-import com.mbobiosio.currencyconverter.model.ExchangeResponse
 import com.mbobiosio.currencyconverter.network.ResourceState
 import kotlinx.coroutines.flow.Flow
 

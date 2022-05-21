@@ -2,7 +2,6 @@ package com.mbobiosio.currencyconverter.network
 
 import com.mbobiosio.currencyconverter.model.ConversionResponse
 import com.mbobiosio.currencyconverter.model.CurrencyResponse
-import com.mbobiosio.currencyconverter.model.ExchangeResponse
 import com.mbobiosio.currencyconverter.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query

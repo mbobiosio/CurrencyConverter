@@ -10,9 +10,9 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Rates(
     @Json(name = "currency_name")
-    val currency_name: String,
+    val currencyName: String,
     @Json(name = "rate")
     val rate: Double,
     @Json(name = "rate_for_amount")
-    val rate_for_amount: Double
+    val rateForAmount: Double
 )
