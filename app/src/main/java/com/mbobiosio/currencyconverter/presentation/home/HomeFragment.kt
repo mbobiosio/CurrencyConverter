@@ -69,15 +69,15 @@ class HomeFragment : BaseBindingFragment() {
             btnConvert.setOnClickListener {
                 val amount = amount.text.toString()
                 when {
-                    amount.isEmpty() or (amount == "0") -> {
-                        Timber.d("Empty amount")
-                        activity?.toast("Empty amount")
+                    amount.isEmpty() || (amount == "0") -> {
+                        activity?.toast("Invalid amount")
                     }
                     !requireContext().isNetworkAvailable() -> {
                         Timber.d("No network")
+                        activity?.toast("No Internet Connection!!!")
                     }
                     else -> {
-                        doConversion(sourceCurrencyCode, newCurrencyCode)
+                        doConversion(sourceCurrencyCode, newCurrencyCode, amount)
                     }
                 }
             }
@@ -94,13 +94,10 @@ class HomeFragment : BaseBindingFragment() {
         viewModel.currencies.observe(this) { result ->
             when (result) {
                 is ResourceState.Loading -> {
-                    binding.progress.visible()
+                    updateProgressUI()
                 }
                 is ResourceState.Success -> {
-                    // stop progress bar
-                    binding.progress.gone()
-                    // show button
-                    binding.btnConvert.visible()
+                    updateSuccessUI()
 
                     val currencies = result.data.currencies
                     val sortCurrencies = currencies.keys.sorted()
@@ -111,72 +108,85 @@ class HomeFragment : BaseBindingFragment() {
                     }
                 }
                 is ResourceState.Error -> {
-                    Timber.d("Error ${result.response?.error?.message}")
+                    showError(result.response?.error?.message)
                 }
                 is ResourceState.NetworkError -> {
-                    Timber.d("Network Error ${result.error}")
+                    showError(result.error)
                 }
             }
         }
     }
 
-    private fun doConversion(fromCurrency: String?, toCurrency: String?) {
+    private fun doConversion(fromCurrency: String?, toCurrency: String?, amount: String) {
 
-        hideKeyboard(requireActivity())
+        binding.apply {
+            // hide keyboard
+            btnConvert.hideKeyboard()
+            // make progress bar visible
+            progress.visible()
 
-        // make progress bar visible
-        binding.progress.visible()
+            // make button invisible
+            btnConvert.gone()
 
-        // make button invisible
-        binding.btnConvert.gone()
-
-        // Get the data inputted
-        val amount = binding.amount.text.toString().toDouble()
-
-        viewModel.convertCurrency(fromCurrency, toCurrency, amount)
+            viewModel.convertCurrency(fromCurrency, toCurrency, amount.toDouble())
+        }
 
         observeConversion()
     }
 
     private fun observeConversion() {
-        viewModel.response.observe(this) {
+        viewModel.conversion.observe(this) {
             when (it) {
+                is ResourceState.Loading -> {
+                    updateProgressUI()
+                }
+
                 is ResourceState.Success -> {
+                    updateSuccessUI()
 
                     val rateForAmount = convertRates(it.data.rates)
-
-                    // set the value in the second edit text field
                     binding.rate.text = convertRateToString(rateForAmount)
-
-                    // stop progress bar
-                    binding.progress.gone()
-                    // show button
-                    binding.btnConvert.visible()
                 }
                 is ResourceState.Error -> {
-                    // stop progress bar
-                    binding.progress.gone()
-                    // show button
-                    binding.btnConvert.visible()
-                    Timber.d("Error ${it.response?.error?.message}")
+                    showError(it.response?.error?.message)
                 }
 
-                is ResourceState.Loading -> {
-                    Timber.d("Loading")
-                    // stop progress bar
-                    binding.progress.visible()
-                    // show button
-                    binding.btnConvert.gone()
-                }
                 is ResourceState.NetworkError -> {
-                    // stop progress bar
-                    binding.progress.gone()
-                    // show button
-                    binding.btnConvert.visible()
-
-                    Timber.d("Network ${it.error}")
+                    showError(it.error)
                 }
             }
+        }
+    }
+
+    private fun updateSuccessUI() {
+        binding.apply {
+            progress.gone()
+            btnConvert.visible()
+            errorMessage.gone()
+        }
+    }
+
+    private fun updateProgressUI() {
+        binding.apply {
+            // stop progress bar
+            progress.visible()
+            // show button
+            btnConvert.gone()
+            // error message
+            errorMessage.gone()
+        }
+    }
+
+    private fun showError(message: String?) {
+        binding.apply {
+            // stop progress bar
+            progress.gone()
+            // show button
+            btnConvert.visible()
+
+            // show error text
+            errorMessage.visible()
+            errorMessage.text = message
         }
     }
 }

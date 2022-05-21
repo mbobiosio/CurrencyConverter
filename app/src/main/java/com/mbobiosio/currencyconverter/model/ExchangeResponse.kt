@@ -8,8 +8,7 @@ import com.squareup.moshi.JsonClass
  * https://linktr.ee/mbobiosio
  */
 @JsonClass(generateAdapter = true)
-data class ConversionResponse(
-
+data class ExchangeResponse(
     @Json(name = "base_currency_code")
     val base_currency_code: String,
 

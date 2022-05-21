@@ -98,6 +98,7 @@
         android:id="@+id/newCurrency"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?colorSurfaceVariant"
         android:hint="@string/currency_hint"
         android:padding="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="@+id/sourceCurrencies"
@@ -111,24 +112,43 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="@dimen/_72sdp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:text="@string/convert"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newCurrency" />
 
     <TextView
         android:id="@+id/rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_medium"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_11ssp"
         app:layout_constraintBottom_toBottomOf="@+id/newCurrency"
         app:layout_constraintEnd_toEndOf="@+id/amountInput"
         app:layout_constraintTop_toTopOf="@+id/newCurrency"
         tools:text="1.0" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:textSize="@dimen/_10ssp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/amountInput"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/sourceCurrencies"
+        app:layout_constraintTop_toBottomOf="@+id/newCurrency"
+        tools:text="@tools:sample/lorem" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

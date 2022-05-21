@@ -2,6 +2,7 @@ package com.mbobiosio.currencyconverter.repository
 
 import com.mbobiosio.currencyconverter.model.ConversionResponse
 import com.mbobiosio.currencyconverter.model.CurrencyResponse
+import com.mbobiosio.currencyconverter.model.ExchangeResponse
 import com.mbobiosio.currencyconverter.network.ApiService
 import com.mbobiosio.currencyconverter.network.ResourceState
 import com.mbobiosio.currencyconverter.network.safeApiCall
@@ -28,6 +29,15 @@ class RepositoryImpl @Inject constructor(
             }
         )
     }.flowOn(Dispatchers.IO)
+
+    override fun exchangeRates(from: String?, amount: Double): Flow<ResourceState<ConversionResponse>> = flow {
+        emit(ResourceState.Loading)
+        emit(
+            safeApiCall {
+                apiService.exchangeRates(Constants.API_KEY, from, amount)
+            }
+        )
+    }
 
     override fun convertCurrencies(
         from: String?,

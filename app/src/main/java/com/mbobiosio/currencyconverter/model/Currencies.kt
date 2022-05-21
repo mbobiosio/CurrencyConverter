@@ -8,5 +8,8 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class Currencies(
-    val currencies: String
+    val currency: String,
+    val currencyName: String,
+    val rate: Double,
+    val rateForAmount: Double
 )

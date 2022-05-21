@@ -2,6 +2,7 @@ package com.mbobiosio.currencyconverter.repository
 
 import com.mbobiosio.currencyconverter.model.ConversionResponse
 import com.mbobiosio.currencyconverter.model.CurrencyResponse
+import com.mbobiosio.currencyconverter.model.ExchangeResponse
 import com.mbobiosio.currencyconverter.network.ResourceState
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +13,11 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
 
     fun listCurrencies(): Flow<ResourceState<CurrencyResponse>>
+
+    fun exchangeRates(
+        from: String?,
+        amount: Double
+    ): Flow<ResourceState<ConversionResponse>>
 
     fun convertCurrencies(
         from: String?,
