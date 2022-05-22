@@ -1,5 +1,60 @@
 ### CurrencyConverter
-Currency Converter tool with live exchange rates.
+This simple Currency Converter app is designed to illustrate working with complex json objects as well showing usage of Flow, Live Data, Coroutines, Hilt - (Clean Architecture)
+
+I also decided to use Room Database to store all currencies locally. This eliminates the dependency on internet everytime to fetch list of currencies.
+
+Data is provided by [Currency Conversion API](https://currency.getgeoapi.com)
+
+### Details
+
+- **Operating System** : Android
+- **Programming Language**: [Kotlin](https://kotlinlang.org)
+- **Architecture** : [MVVM](https://developer.android.com/jetpack/guide)
+- **Dependency Injection** : [Hilt](https://dagger.dev/hilt/)
+- **Fragment Management** : [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
+- **Material Components for Android** : [Material Components for Android](https://github.com/material-components/material-components-android)
+- **Design** : [Material Design 3](https://m3.material.io)
+- **Moshi** : [Moshi](https://github.com/square/moshi)
+- **Retrofit** : [Retrofit](https://square.github.io/retrofit)
+- **Room** : [Room](https://developer.android.com/topic/libraries/architecture/room)
+- **Coroutines** : [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
+- **Kotlin Flow** : [Kotlin Flow](https://developer.android.com/kotlin/flow)
+- **LiveData** : [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+- **ViewModel** : [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+
+The rates screen response data.
+```json
+{
+   "status":"success",
+   "currencies": {
+      "AUD":"Australian Dollar",
+      "BGN":"Bulgarian Lev"
+   }
+}
+```
+
+Conversion response data
+```json
+{
+   "base_currency_code": "USD",
+   "base_currency_name": "United States dollar",
+   "amount": "100.0000",
+   "updated_date": "2022-05-22",
+   "rates": {
+      "PLN": {
+         "currency_name": "Polish złoty",
+         "rate": "4.3826",
+         "rate_for_amount": "438.2576"
+      },
+      "THB": {
+         "currency_name": "Thai baht",
+         "rate": "34.4133",
+         "rate_for_amount": "3441.3273"
+      }
+   },
+   "status": "success"
+}
+```
 
 ## Getting started
 
@@ -29,7 +84,7 @@ apiKey = "insert key here"
 
 ### Author
 
-* [Mbuodile Obiosio](https://www.linkedin.com/in/mb-obiosio/)
+* [Mbuodile Obiosio](https://linktr.ee/mbobiosio/)
 * [![Follow me](https://img.shields.io/twitter/follow/cazewonder?style=social)](https://twitter.com/cazewonder)
 
 ## 📝 License
