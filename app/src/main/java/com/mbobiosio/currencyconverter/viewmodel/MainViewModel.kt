@@ -1,12 +1,10 @@
 package com.mbobiosio.currencyconverter.viewmodel
 
-import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
-import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
-import com.mbobiosio.currencyconverter.data.remote.repository.Repository
-import com.mbobiosio.currencyconverter.domain.ResourceState
-import com.mbobiosio.currencyconverter.domain.model.ConversionResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.mbobiosio.currencyconverter.domain.repository.DataStoreRepository
-import com.mbobiosio.currencyconverter.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,7 +16,6 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
 
@@ -32,42 +29,10 @@ class MainViewModel @Inject constructor(
         return isLoading
     }
 
-    val currencyCode = MutableLiveData<String?>()
-
     val isFirstLaunch: LiveData<Boolean> = dataStoreRepository.getFirstLaunch().asLiveData()
 
     fun setFirstLaunch(isFirstLaunch: Boolean) =
         viewModelScope.launch {
             dataStoreRepository.saveFirstLaunch(isFirstLaunch)
         }
-
-    private val _conversion: MutableLiveData<ResourceState<ConversionResponse>> = MutableLiveData()
-    val conversion: LiveData<ResourceState<ConversionResponse>>
-        get() = _conversion
-
-    private val _currencies: MutableLiveData<ResourceState<List<CurrencyResponse>>> = MutableLiveData()
-    val currencies: LiveData<ResourceState<List<CurrencyResponse>>>
-        get() = _currencies
-
-    private val _convert = SingleLiveEvent<ResourceState<ConversionResponse>>()
-    val convert: LiveData<ResourceState<ConversionResponse>> get() = _convert
-
-    fun convertCurrency(from: String?, to: String?, amount: Double) =
-        viewModelScope.launch {
-            repository.convertCurrencies(from, to, amount).collect {
-                _conversion.value = it
-            }
-        }
-
-    fun getExchangeRates(from: String?, amount: Double) = viewModelScope.launch {
-        repository.exchangeRates(from, amount).collect {
-            _convert.value = it
-        }
-    }
-
-    fun listCurrencies() = viewModelScope.launch {
-        repository.listCurrencies().collect {
-            _currencies.value = it
-        }
-    }
 }

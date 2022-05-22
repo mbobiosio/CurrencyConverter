@@ -57,6 +57,7 @@ class RepositoryImpl @Inject constructor(
                     currencyDao.deleteAll()
                     currencyDao.insertCurrency(data)
                     emit(ResourceState.Success(currencyDao.getAllCurrencies()))
+                    Timber.d("${currencyDao.getAllCurrencies()}")
                 }
                 is ResourceState.Error -> {
                     Timber.d("Error ${response.response?.error?.message}")

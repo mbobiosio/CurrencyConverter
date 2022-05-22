@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mbobiosio.currencyconverter.databinding.ItemCurrencyBinding
 import com.mbobiosio.currencyconverter.domain.model.Currencies
-import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
 
 /**
  * @Author Mbuodile Obiosio
  * https://linktr.ee/mbobiosio
  */
 class CurrencyAdapter(
-    private val viewModel: MainViewModel
+    private val viewModel: CurrencyViewModel
 ) :
     ListAdapter<Currencies, CurrencyAdapter.CurrencyViewHolder>(ItemCallback()) {
 
@@ -43,7 +42,7 @@ class CurrencyAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             item: Currencies,
-            mainViewModel: MainViewModel
+            mainViewModel: CurrencyViewModel
         ) {
             with(binding) {
                 currency = item

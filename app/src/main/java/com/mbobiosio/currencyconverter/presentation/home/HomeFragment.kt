@@ -10,7 +10,6 @@ import com.mbobiosio.currencyconverter.databinding.FragmentHomeBinding
 import com.mbobiosio.currencyconverter.domain.ResourceState
 import com.mbobiosio.currencyconverter.presentation.base.BaseBindingFragment
 import com.mbobiosio.currencyconverter.util.* // ktlint-disable no-wildcard-imports
-import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -27,7 +26,7 @@ class HomeFragment : BaseBindingFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun bindFragment(inflater: LayoutInflater, container: ViewGroup?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -92,7 +91,7 @@ class HomeFragment : BaseBindingFragment() {
     private fun fetchCurrencies() {
         viewModel.listCurrencies()
 
-        viewModel.currencies.observeOnce(viewLifecycleOwner) { result ->
+        viewModel.currencyResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ResourceState.Loading -> {
                     updateProgressUI()

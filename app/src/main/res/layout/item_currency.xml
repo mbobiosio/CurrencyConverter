@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.mbobiosio.currencyconverter.viewmodel.MainViewModel" />
+            type="com.mbobiosio.currencyconverter.presentation.currencies.CurrencyViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

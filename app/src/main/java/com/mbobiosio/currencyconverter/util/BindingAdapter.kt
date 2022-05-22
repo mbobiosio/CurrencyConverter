@@ -2,7 +2,7 @@ package com.mbobiosio.currencyconverter.util
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
+import com.mbobiosio.currencyconverter.presentation.currencies.CurrencyViewModel
 
 /**
  * @Author Mbuodile Obiosio
@@ -15,6 +15,6 @@ fun TextView.convertDouble(value: Double) {
 }
 
 @BindingAdapter("code", "exchangeRate", "currency")
-fun TextView.exchangeRate(code: MainViewModel, ex: Double, currency: String) {
+fun TextView.exchangeRate(code: CurrencyViewModel, ex: Double, currency: String) {
     text = "1 ".plus(code.currencyCode.value).plus(" = ").plus(ex).plus(" ").plus(currency)
 }

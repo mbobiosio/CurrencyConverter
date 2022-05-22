@@ -74,9 +74,9 @@ There are a few ways to open this project.
 
 You need to supply API key for conversions. You can get a free api key from `getgeoapi.com`.
 
-When you obtain the key, you can provide them to the app by putting the following in the `local.properties` project root file:
+When you obtain the key, you can provide them to the app by putting the following in the `Constants`:
 ```properties
-apiKey = "insert key here"
+const val API_KEY = ""
 ```
 
 ## Screenshots

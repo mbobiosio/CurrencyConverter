@@ -14,7 +14,6 @@ import com.mbobiosio.currencyconverter.domain.model.ConversionResponse
 import com.mbobiosio.currencyconverter.domain.model.Currencies
 import com.mbobiosio.currencyconverter.presentation.base.BaseBindingFragment
 import com.mbobiosio.currencyconverter.util.* // ktlint-disable no-wildcard-imports
-import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -27,7 +26,7 @@ class CurrenciesFragment : BaseBindingFragment() {
     private var _binding: FragmentCurrenciesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<CurrencyViewModel>()
 
     private var currencyCode: String? = "USD"
 
@@ -105,7 +104,7 @@ class CurrenciesFragment : BaseBindingFragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.currencies.observeOnce(viewLifecycleOwner) { result ->
+        viewModel.currencyResult.observeOnce(viewLifecycleOwner) { result ->
             when (result) {
                 is ResourceState.Loading -> {
                     Timber.d("Loading")
@@ -122,7 +121,7 @@ class CurrenciesFragment : BaseBindingFragment() {
             }
         }
 
-        viewModel.convert.observeOnce(viewLifecycleOwner) { response ->
+        viewModel.exchangeRates.observeOnce(viewLifecycleOwner) { response ->
             when (response) {
                 is ResourceState.Loading -> {
                     updateProgressUI()
