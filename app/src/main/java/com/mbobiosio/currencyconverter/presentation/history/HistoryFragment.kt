@@ -1,4 +1,4 @@
-package com.mbobiosio.currencyconverter.presentation.about
+package com.mbobiosio.currencyconverter.presentation.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.mbobiosio.currencyconverter.R
  * @Author Mbuodile Obiosio
  * https://linktr.ee/mbobiosio
  */
-class AboutFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,6 +19,6 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 }
