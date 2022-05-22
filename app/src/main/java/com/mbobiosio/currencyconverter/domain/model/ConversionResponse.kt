@@ -1,4 +1,4 @@
-package com.mbobiosio.currencyconverter.model
+package com.mbobiosio.currencyconverter.domain.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -29,5 +29,5 @@ data class ConversionResponse(
     var status: String,
 
     @Json(name = "error")
-    val error: Error?
+    val error: Error? = null
 )

@@ -36,8 +36,8 @@
             android:layout_height="match_parent">
 
             <com.skydoves.powerspinner.PowerSpinnerView
-                android:id="@+id/sourceCurrencies"
-                android:layout_width="wrap_content"
+                android:id="@+id/currencies"
+                android:layout_width="@dimen/_80sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
@@ -65,9 +65,9 @@
                 android:maxLines="1"
                 android:padding="@dimen/_8sdp"
                 android:textSize="@dimen/_11ssp"
-                app:layout_constraintBottom_toBottomOf="@+id/sourceCurrencies"
+                app:layout_constraintBottom_toBottomOf="@+id/currencies"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/sourceCurrencies" />
+                app:layout_constraintTop_toTopOf="@+id/currencies" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,7 @@
 package com.mbobiosio.currencyconverter.di
 
-import com.mbobiosio.currencyconverter.repository.DataStoreRepoImpl
-import com.mbobiosio.currencyconverter.repository.DataStoreRepository
+import com.mbobiosio.currencyconverter.domain.repository.DataStoreRepoImpl
+import com.mbobiosio.currencyconverter.domain.repository.DataStoreRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

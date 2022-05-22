@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mbobiosio.currencyconverter.databinding.ItemCurrencyBinding
-import com.mbobiosio.currencyconverter.model.Currencies
+import com.mbobiosio.currencyconverter.domain.model.Currencies
 import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
 
 /**

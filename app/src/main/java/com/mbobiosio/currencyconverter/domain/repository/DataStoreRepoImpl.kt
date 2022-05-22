@@ -1,4 +1,4 @@
-package com.mbobiosio.currencyconverter.repository
+package com.mbobiosio.currencyconverter.domain.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

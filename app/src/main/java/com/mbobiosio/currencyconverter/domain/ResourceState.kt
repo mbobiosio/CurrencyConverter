@@ -1,6 +1,6 @@
-package com.mbobiosio.currencyconverter.network
+package com.mbobiosio.currencyconverter.domain
 
-import com.mbobiosio.currencyconverter.model.ErrorResponse
+import com.mbobiosio.currencyconverter.domain.model.ErrorResponse
 
 /**
  * @Author Mbuodile Obiosio

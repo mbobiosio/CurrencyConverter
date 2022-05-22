@@ -77,13 +77,19 @@ dependencies {
     def retrofit_version = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
-
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     //Moshi
     def moshiVersion = "1.13.0"
     implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+
+    // Room
+    def roomVersion = "2.4.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    // Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     //splash Android 12
     implementation("androidx.core:core-splashscreen:1.0.0-beta02")

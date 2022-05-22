@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
 import com.mbobiosio.currencyconverter.databinding.FragmentHomeBinding
-import com.mbobiosio.currencyconverter.network.ResourceState
+import com.mbobiosio.currencyconverter.domain.ResourceState
 import com.mbobiosio.currencyconverter.presentation.base.BaseBindingFragment
 import com.mbobiosio.currencyconverter.util.* // ktlint-disable no-wildcard-imports
 import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
@@ -91,7 +92,7 @@ class HomeFragment : BaseBindingFragment() {
     private fun fetchCurrencies() {
         viewModel.listCurrencies()
 
-        viewModel.currencies.observe(this) { result ->
+        viewModel.currencies.observeOnce(viewLifecycleOwner) { result ->
             when (result) {
                 is ResourceState.Loading -> {
                     updateProgressUI()
@@ -99,19 +100,28 @@ class HomeFragment : BaseBindingFragment() {
                 is ResourceState.Success -> {
                     updateSuccessUI()
 
-                    val currencies = result.data.currencies
-                    val sortCurrencies = currencies.keys.sorted()
-
-                    with(binding) {
-                        sourceCurrencies.setItems(sortCurrencies)
-                        newCurrency.setItems(sortCurrencies)
-                    }
+                    updateData(result.data)
                 }
                 is ResourceState.Error -> {
                     showError(result.response?.error?.message)
                 }
                 is ResourceState.NetworkError -> {
                     showError(result.error)
+                }
+            }
+        }
+    }
+
+    private fun updateData(data: List<CurrencyResponse>) {
+        when {
+            data.isNotEmpty() -> {
+                val currencies = data.map { response ->
+                    response.currencies.keys
+                }.first().toList().sorted()
+
+                with(binding) {
+                    sourceCurrencies.setItems(currencies)
+                    newCurrency.setItems(currencies)
                 }
             }
         }

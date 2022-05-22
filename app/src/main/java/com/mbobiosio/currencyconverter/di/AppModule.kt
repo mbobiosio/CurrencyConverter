@@ -5,9 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.mbobiosio.currencyconverter.BuildConfig
-import com.mbobiosio.currencyconverter.network.ApiService
-import com.mbobiosio.currencyconverter.repository.Repository
-import com.mbobiosio.currencyconverter.repository.RepositoryImpl
+import com.mbobiosio.currencyconverter.data.local.CurrencyDao
+import com.mbobiosio.currencyconverter.data.remote.api.ApiService
+import com.mbobiosio.currencyconverter.data.remote.repository.Repository
+import com.mbobiosio.currencyconverter.data.remote.repository.RepositoryImpl
 import com.mbobiosio.currencyconverter.util.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -82,8 +83,9 @@ class AppModule {
     @Provides
     @Singleton
     fun provideRepository(
-        service: ApiService
-    ): Repository = RepositoryImpl(service)
+        service: ApiService,
+        currencyDao: CurrencyDao
+    ): Repository = RepositoryImpl(service, currencyDao)
 
     @Provides
     @Singleton

@@ -1,7 +1,7 @@
-package com.mbobiosio.currencyconverter.network
+package com.mbobiosio.currencyconverter.data.remote.api
 
-import com.mbobiosio.currencyconverter.model.ConversionResponse
-import com.mbobiosio.currencyconverter.model.CurrencyResponse
+import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
+import com.mbobiosio.currencyconverter.domain.model.ConversionResponse
 import com.mbobiosio.currencyconverter.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query

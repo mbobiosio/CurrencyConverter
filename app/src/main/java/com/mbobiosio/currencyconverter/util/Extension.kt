@@ -12,14 +12,20 @@ import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.mbobiosio.currencyconverter.model.Rates
+import com.mbobiosio.currencyconverter.domain.model.Rates
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import java.lang.reflect.Type
 
 /**
  * @Author Mbuodile Obiosio
  * https://linktr.ee/mbobiosio
  */
-fun convertRates(rates: Map<String, Rates>): Double {
-    return rates.values.lastOrNull()?.rateForAmount ?: 0.0
+fun convertRates(rates: Map<String, Rates>?): Double? {
+    return rates?.let {
+        it.values.lastOrNull()?.rateForAmount ?: 0.0
+    }
 }
 
 fun convertRateToString(rate: Double?): String {
@@ -93,4 +99,18 @@ fun EditText.onAction(action: Int, runAction: () -> Unit) {
             else -> false
         }
     }
+}
+
+inline fun <reified K, reified V> Moshi.mapAdapter(
+    keyType: Type = K::class.java,
+    valueType: Type = V::class.java
+): JsonAdapter<Map<K, V>> {
+    return adapter(mapType<K, V>(keyType, valueType))
+}
+
+inline fun <reified K, reified V> mapType(
+    keyType: Type = K::class.java,
+    valueType: Type = V::class.java
+): Type {
+    return Types.newParameterizedType(Map::class.java, keyType, valueType)
 }

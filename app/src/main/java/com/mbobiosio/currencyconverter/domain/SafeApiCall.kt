@@ -1,7 +1,8 @@
 package com.mbobiosio.currencyconverter.network
 
-import com.mbobiosio.currencyconverter.model.Error
-import com.mbobiosio.currencyconverter.model.ErrorResponse
+import com.mbobiosio.currencyconverter.domain.ResourceState
+import com.mbobiosio.currencyconverter.domain.model.Error
+import com.mbobiosio.currencyconverter.domain.model.ErrorResponse
 import com.squareup.moshi.Moshi
 import okio.IOException
 import retrofit2.HttpException

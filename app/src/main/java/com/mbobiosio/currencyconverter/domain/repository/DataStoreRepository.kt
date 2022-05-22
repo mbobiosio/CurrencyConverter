@@ -1,4 +1,4 @@
-package com.mbobiosio.currencyconverter.repository
+package com.mbobiosio.currencyconverter.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 

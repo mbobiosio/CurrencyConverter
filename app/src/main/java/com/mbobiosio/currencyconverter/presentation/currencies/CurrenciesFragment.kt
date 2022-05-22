@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
 import com.mbobiosio.currencyconverter.databinding.FragmentCurrenciesBinding
-import com.mbobiosio.currencyconverter.model.Currencies
-import com.mbobiosio.currencyconverter.network.ResourceState
+import com.mbobiosio.currencyconverter.domain.ResourceState
+import com.mbobiosio.currencyconverter.domain.model.ConversionResponse
+import com.mbobiosio.currencyconverter.domain.model.Currencies
 import com.mbobiosio.currencyconverter.presentation.base.BaseBindingFragment
 import com.mbobiosio.currencyconverter.util.* // ktlint-disable no-wildcard-imports
 import com.mbobiosio.currencyconverter.viewmodel.MainViewModel
@@ -41,6 +43,8 @@ class CurrenciesFragment : BaseBindingFragment() {
 
     override fun setupUI(view: View, savedInstanceState: Bundle?) {
 
+        viewModel.listCurrencies()
+
         observeViewModel()
 
         with(binding) {
@@ -51,7 +55,7 @@ class CurrenciesFragment : BaseBindingFragment() {
                     it?.let {
                         when {
                             it.isNotEmpty() -> {
-                                requestExchangeRates(it.toString())
+                                requestExchangeRates(currencyCode, it.toString())
                             }
                             else -> {
                                 currencyAdapter.submitList(null)
@@ -63,7 +67,7 @@ class CurrenciesFragment : BaseBindingFragment() {
                     string?.let {
                         when {
                             it.isNotEmpty() -> {
-                                requestExchangeRates(string.toString())
+                                requestExchangeRates(currencyCode, string.toString())
                             }
                             else -> {
                                 currencyAdapter.submitList(null)
@@ -73,6 +77,26 @@ class CurrenciesFragment : BaseBindingFragment() {
                 }
             )
 
+            currencies.apply {
+                lifecycleOwner = this@CurrenciesFragment
+
+                setOnSpinnerItemSelectedListener<String> { _, _, _, newItem ->
+                    currencyCode = newItem
+                    val amount = binding.amountInput.text.toString()
+                    when {
+                        amount.isNotEmpty() && amount != "0" -> {
+                            requestExchangeRates(currencyCode, amount)
+                        }
+                    }
+                }
+
+                setOnSpinnerOutsideTouchListener { _, motionEvent ->
+                    if (motionEvent.actionButton == 0) {
+                        currencies.dismiss()
+                    }
+                }
+            }
+
             amountInput.onAction(EditorInfo.IME_ACTION_DONE) {
                 amountInput.hideKeyboard()
                 Timber.d("Done")
@@ -81,6 +105,23 @@ class CurrenciesFragment : BaseBindingFragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.currencies.observeOnce(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResourceState.Loading -> {
+                    Timber.d("Loading")
+                }
+                is ResourceState.Success -> {
+                    updateSpinner(result.data)
+                }
+                is ResourceState.Error -> {
+                    showError(result.response?.error?.message)
+                }
+                is ResourceState.NetworkError -> {
+                    showError(result.error)
+                }
+            }
+        }
+
         viewModel.convert.observeOnce(viewLifecycleOwner) { response ->
             when (response) {
                 is ResourceState.Loading -> {
@@ -89,18 +130,9 @@ class CurrenciesFragment : BaseBindingFragment() {
                 is ResourceState.Success -> {
                     updateSuccessUI()
 
-                    val exchange = response.data.rates.map { entries ->
-                        Currencies(
-                            entries.key,
-                            entries.value.currencyName,
-                            entries.value.rate,
-                            entries.value.rateForAmount
-                        )
-                    }.sortedBy { currency ->
-                        currency.currency
-                    }
-                    currencyAdapter.submitList(exchange)
+                    updateExchangeData(response.data)
                 }
+
                 is ResourceState.Error -> {
                     showError(response.response?.error?.message)
                 }
@@ -111,8 +143,34 @@ class CurrenciesFragment : BaseBindingFragment() {
         }
     }
 
-    private fun requestExchangeRates(amount: String) {
-        viewModel.getExchangeRates(currencyCode, amount.toDouble())
+    private fun updateSpinner(data: List<CurrencyResponse>) {
+        when {
+            data.isNotEmpty() -> {
+                val currencies = data.map { map ->
+                    map.currencies.keys
+                }.first().toList().sorted()
+
+                binding.currencies.setItems(currencies)
+            }
+        }
+    }
+
+    private fun updateExchangeData(data: ConversionResponse) {
+        val exchange = data.rates.map { entries ->
+            Currencies(
+                entries.key,
+                entries.value.currencyName,
+                entries.value.rate,
+                entries.value.rateForAmount
+            )
+        }.sortedBy { currency ->
+            currency.currency
+        }
+        currencyAdapter.submitList(exchange)
+    }
+
+    private fun requestExchangeRates(currency: String?, amount: String) {
+        viewModel.getExchangeRates(currency, amount.toDouble())
         viewModel.currencyCode.value = currencyCode
     }
 

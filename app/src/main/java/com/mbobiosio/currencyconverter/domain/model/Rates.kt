@@ -1,5 +1,6 @@
-package com.mbobiosio.currencyconverter.model
+package com.mbobiosio.currencyconverter.domain.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
@@ -7,9 +8,11 @@ import com.squareup.moshi.JsonClass
  * https://linktr.ee/mbobiosio
  */
 @JsonClass(generateAdapter = true)
-data class Currencies(
-    val currency: String,
+data class Rates(
+    @Json(name = "currency_name")
     val currencyName: String,
+    @Json(name = "rate")
     val rate: Double,
+    @Json(name = "rate_for_amount")
     val rateForAmount: Double
 )

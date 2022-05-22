@@ -1,11 +1,11 @@
 package com.mbobiosio.currencyconverter.viewmodel
 
 import androidx.lifecycle.* // ktlint-disable no-wildcard-imports
-import com.mbobiosio.currencyconverter.model.ConversionResponse
-import com.mbobiosio.currencyconverter.model.CurrencyResponse
-import com.mbobiosio.currencyconverter.network.ResourceState
-import com.mbobiosio.currencyconverter.repository.DataStoreRepository
-import com.mbobiosio.currencyconverter.repository.Repository
+import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
+import com.mbobiosio.currencyconverter.data.remote.repository.Repository
+import com.mbobiosio.currencyconverter.domain.ResourceState
+import com.mbobiosio.currencyconverter.domain.model.ConversionResponse
+import com.mbobiosio.currencyconverter.domain.repository.DataStoreRepository
 import com.mbobiosio.currencyconverter.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -45,8 +45,8 @@ class MainViewModel @Inject constructor(
     val conversion: LiveData<ResourceState<ConversionResponse>>
         get() = _conversion
 
-    private val _currencies: MutableLiveData<ResourceState<CurrencyResponse>> = MutableLiveData()
-    val currencies: LiveData<ResourceState<CurrencyResponse>>
+    private val _currencies: MutableLiveData<ResourceState<List<CurrencyResponse>>> = MutableLiveData()
+    val currencies: LiveData<ResourceState<List<CurrencyResponse>>>
         get() = _currencies
 
     private val _convert = SingleLiveEvent<ResourceState<ConversionResponse>>()
