@@ -52,17 +52,19 @@ class CurrencyViewModelTest {
             if (viewModel.currencyResult.value != null) {
                 when (response) {
                     is ResourceState.Success -> {
-                        val result = CurrencyResponse(
-                            id = null,
-                            status = response.data[0].status,
-                            currencies = response.data[0].currencies
-                        )
-                        Assert.assertEquals(result, TestData.getCurrencyListItems())
+                        response.data?.let {
+                            val result = CurrencyResponse(
+                                id = null,
+                                status = it[0].status,
+                                currencies = it[0].currencies
+                            )
+                            Assert.assertEquals(result, TestData.getCurrencyListItems())
 
-                        val currencies = viewModel.currencyResult.value
-                        Assert.assertNotNull(currencies)
-                        Assert.assertEquals(ResourceState.Success::class.java, result)
-                        Assert.assertEquals(CurrencyResponse::class.java, currencies)
+                            val currencies = viewModel.currencyResult.value
+                            Assert.assertNotNull(currencies)
+                            Assert.assertEquals(ResourceState.Success::class.java, result)
+                            Assert.assertEquals(CurrencyResponse::class.java, currencies)
+                        }
                     }
                     else -> {}
                 }
@@ -79,14 +81,16 @@ class CurrencyViewModelTest {
                 when (it) {
                     is ResourceState.Success -> {
                         val data = it.data
-                        val result = ConversionResponse(
-                            baseCurrencyCode = data.baseCurrencyCode,
-                            baseCurrencyName = data.baseCurrencyCode,
-                            amount = data.amount,
-                            updatedDate = data.updatedDate,
-                            rates = data.rates,
-                            status = data.status
-                        )
+                        data?.let {
+                            val result = ConversionResponse(
+                                baseCurrencyCode = data.baseCurrencyCode,
+                                baseCurrencyName = data.baseCurrencyCode,
+                                amount = data.amount,
+                                updatedDate = data.updatedDate,
+                                rates = data.rates,
+                                status = data.status
+                            )
+                        }
                     }
                     else -> {}
                 }
@@ -103,18 +107,20 @@ class CurrencyViewModelTest {
                 when (it) {
                     is ResourceState.Success -> {
                         val data = it.data
-                        val currency = ConversionResponse(
-                            baseCurrencyCode = data.baseCurrencyCode,
-                            baseCurrencyName = data.baseCurrencyCode,
-                            amount = data.amount,
-                            updatedDate = data.updatedDate,
-                            rates = data.rates,
-                            status = data.status
-                        )
+                        data?.let {
+                            val currency = ConversionResponse(
+                                baseCurrencyCode = data.baseCurrencyCode,
+                                baseCurrencyName = data.baseCurrencyCode,
+                                amount = data.amount,
+                                updatedDate = data.updatedDate,
+                                rates = data.rates,
+                                status = data.status
+                            )
 
-                        val exchangeRates = viewModel.exchangeRates.value
-                        Assert.assertNotNull(exchangeRates)
-                        Assert.assertEquals(exchangeRates, TestData.currencyObj)
+                            val exchangeRates = viewModel.exchangeRates.value
+                            Assert.assertNotNull(exchangeRates)
+                            Assert.assertEquals(exchangeRates, TestData.currencyObj)
+                        }
                     }
                     else -> {}
                 }

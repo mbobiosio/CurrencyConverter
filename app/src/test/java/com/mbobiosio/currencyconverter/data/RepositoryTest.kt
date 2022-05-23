@@ -2,7 +2,7 @@ package com.mbobiosio.currencyconverter.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.mbobiosio.currencyconverter.TestData
-import com.mbobiosio.currencyconverter.data.local.CurrencyDao
+import com.mbobiosio.currencyconverter.data.local.AppDatabase
 import com.mbobiosio.currencyconverter.data.remote.api.ApiService
 import com.mbobiosio.currencyconverter.data.remote.repository.RepositoryImpl
 import com.mbobiosio.currencyconverter.util.Constants
@@ -31,7 +31,7 @@ class RepositoryTest {
 
     private val currencyApi = mock<ApiService>()
 
-    private val currencyDao = mock<CurrencyDao>()
+    private val appDatabase = mock<AppDatabase>()
 
     private lateinit var repository: RepositoryImpl
 
@@ -40,7 +40,7 @@ class RepositoryTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThread)
-        repository = RepositoryImpl(currencyApi, currencyDao)
+        repository = RepositoryImpl(currencyApi, appDatabase)
     }
 
     @Test
