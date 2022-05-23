@@ -142,30 +142,34 @@ class CurrenciesFragment : BaseBindingFragment() {
         }
     }
 
-    private fun updateSpinner(data: List<CurrencyResponse>) {
-        when {
-            data.isNotEmpty() -> {
-                val currencies = data.map { map ->
-                    map.currencies.keys
-                }.first().toList().sorted()
+    private fun updateSpinner(data: List<CurrencyResponse>?) {
+        data?.let {
+            when {
+                it.isNotEmpty() -> {
+                    val currencies = it.map { map ->
+                        map.currencies.keys
+                    }.first().toList().sorted()
 
-                binding.currencies.setItems(currencies)
+                    binding.currencies.setItems(currencies)
+                }
             }
         }
     }
 
-    private fun updateExchangeData(data: ConversionResponse) {
-        val exchange = data.rates.map { entries ->
-            Currencies(
-                entries.key,
-                entries.value.currencyName,
-                entries.value.rate,
-                entries.value.rateForAmount
-            )
-        }.sortedBy { currency ->
-            currency.currency
+    private fun updateExchangeData(data: ConversionResponse?) {
+        data?.let {
+            val exchange = it.rates.map { entries ->
+                Currencies(
+                    entries.key,
+                    entries.value.currencyName,
+                    entries.value.rate,
+                    entries.value.rateForAmount
+                )
+            }.sortedBy { currency ->
+                currency.currency
+            }
+            currencyAdapter.submitList(exchange)
         }
-        currencyAdapter.submitList(exchange)
     }
 
     private fun requestExchangeRates(currency: String?, amount: String) {

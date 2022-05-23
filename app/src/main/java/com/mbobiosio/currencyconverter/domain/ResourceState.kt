@@ -8,7 +8,7 @@ import com.mbobiosio.currencyconverter.domain.model.ErrorResponse
  */
 sealed class ResourceState<out T> {
     // Successful
-    data class Success<out T>(val data: T) : ResourceState<T>()
+    data class Success<out T>(val data: T?) : ResourceState<T>()
 
     // Error
     data class Error(val code: Int? = null, val response: ErrorResponse? = null) :

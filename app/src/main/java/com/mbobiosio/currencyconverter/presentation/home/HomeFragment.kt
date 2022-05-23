@@ -111,16 +111,18 @@ class HomeFragment : BaseBindingFragment() {
         }
     }
 
-    private fun updateData(data: List<CurrencyResponse>) {
-        when {
-            data.isNotEmpty() -> {
-                val currencies = data.map { response ->
-                    response.currencies.keys
-                }.first().toList().sorted()
+    private fun updateData(data: List<CurrencyResponse>?) {
+        data?.let {
+            when {
+                it.isNotEmpty() -> {
+                    val currencies = it.map { response ->
+                        response.currencies.keys
+                    }.first().toList().sorted()
 
-                with(binding) {
-                    sourceCurrencies.setItems(currencies)
-                    newCurrency.setItems(currencies)
+                    with(binding) {
+                        sourceCurrencies.setItems(currencies)
+                        newCurrency.setItems(currencies)
+                    }
                 }
             }
         }
@@ -153,7 +155,7 @@ class HomeFragment : BaseBindingFragment() {
                 is ResourceState.Success -> {
                     updateSuccessUI()
 
-                    val rateForAmount = convertRates(it.data.rates)
+                    val rateForAmount = convertRates(it.data?.rates)
                     binding.rate.text = convertRateToString(rateForAmount)
                 }
                 is ResourceState.Error -> {

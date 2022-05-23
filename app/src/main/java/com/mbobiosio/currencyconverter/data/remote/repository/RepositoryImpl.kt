@@ -1,6 +1,7 @@
 package com.mbobiosio.currencyconverter.data.remote.repository
 
-import com.mbobiosio.currencyconverter.data.local.CurrencyDao
+import androidx.room.withTransaction
+import com.mbobiosio.currencyconverter.data.local.AppDatabase
 import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
 import com.mbobiosio.currencyconverter.data.remote.api.ApiService
 import com.mbobiosio.currencyconverter.domain.ResourceState
@@ -20,8 +21,10 @@ import javax.inject.Inject
  */
 class RepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val currencyDao: CurrencyDao
+    private val appDatabase: AppDatabase
 ) : Repository {
+
+    private val currencyDao = appDatabase.currencyDao
 
     override suspend fun insertCurrency(currency: CurrencyResponse) {
         currencyDao.insertCurrency(currency)
@@ -53,9 +56,13 @@ class RepositoryImpl @Inject constructor(
                     emit(ResourceState.Loading)
                 }
                 is ResourceState.Success -> {
-                    val data = response.data
-                    currencyDao.deleteAll()
-                    currencyDao.insertCurrency(data)
+                    appDatabase.withTransaction {
+                        val data = response.data
+                        appDatabase.currencyDao.deleteAll()
+                        data?.let {
+                            appDatabase.currencyDao.insertCurrency(it)
+                        }
+                    }
                     emit(ResourceState.Success(currencyDao.getAllCurrencies()))
                     Timber.d("${currencyDao.getAllCurrencies()}")
                 }

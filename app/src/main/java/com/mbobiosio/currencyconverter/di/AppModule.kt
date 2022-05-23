@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.mbobiosio.currencyconverter.BuildConfig
-import com.mbobiosio.currencyconverter.data.local.CurrencyDao
+import com.mbobiosio.currencyconverter.data.local.AppDatabase
 import com.mbobiosio.currencyconverter.data.remote.api.ApiService
 import com.mbobiosio.currencyconverter.data.remote.repository.Repository
 import com.mbobiosio.currencyconverter.data.remote.repository.RepositoryImpl
@@ -84,8 +84,8 @@ class AppModule {
     @Singleton
     fun provideRepository(
         service: ApiService,
-        currencyDao: CurrencyDao
-    ): Repository = RepositoryImpl(service, currencyDao)
+        appDatabase: AppDatabase
+    ): Repository = RepositoryImpl(service, appDatabase)
 
     @Provides
     @Singleton
