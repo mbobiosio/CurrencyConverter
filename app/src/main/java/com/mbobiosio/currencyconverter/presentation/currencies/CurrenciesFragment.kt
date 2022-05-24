@@ -168,6 +168,11 @@ class CurrenciesFragment : BaseBindingFragment() {
             }.sortedBy { currency ->
                 currency.currency
             }
+
+            // Set data to view
+            binding.data = it
+
+            // Submit list to adapter
             currencyAdapter.submitList(exchange)
         }
     }

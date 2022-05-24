@@ -13,7 +13,7 @@
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.1615" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.274903805044891" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.274903805044891" />
-        <entry key="app/src/main/res/layout/fragment_currencies.xml" value="0.27233860624198375" />
+        <entry key="app/src/main/res/layout/fragment_currencies.xml" value="0.18362178134233853" />
         <entry key="app/src/main/res/layout/fragment_first_launch.xml" value="0.274903805044891" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2736212056434374" />
         <entry key="app/src/main/res/layout/item_currency.xml" value="0.1371640407784986" />
