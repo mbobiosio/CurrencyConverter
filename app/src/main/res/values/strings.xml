@@ -10,7 +10,7 @@
     <string name="converter">Converter</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="last_updated">Last updated %s</string>
+    <string name="last_updated">Last updated: %s</string>
     <string name="amount">Enter amount</string>
     <string name="result">Result</string>
     <string name="converted_value">100</string>

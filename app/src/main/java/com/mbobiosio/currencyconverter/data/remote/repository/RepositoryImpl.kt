@@ -6,7 +6,7 @@ import com.mbobiosio.currencyconverter.data.local.entity.CurrencyResponse
 import com.mbobiosio.currencyconverter.data.remote.api.ApiService
 import com.mbobiosio.currencyconverter.domain.ResourceState
 import com.mbobiosio.currencyconverter.domain.model.ConversionResponse
-import com.mbobiosio.currencyconverter.network.safeApiCall
+import com.mbobiosio.currencyconverter.domain.safeApiCall
 import com.mbobiosio.currencyconverter.util.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -38,45 +38,44 @@ class RepositoryImpl @Inject constructor(
         currencyDao.deleteAll()
     }
 
-    override suspend fun getAllCurrencies(): ResourceState<List<CurrencyResponse>> {
-        return ResourceState.Success(currencyDao.getAllCurrencies())
-    }
+    override suspend fun getAllCurrencies(): ResourceState<List<CurrencyResponse>> =
+        currencyDao.getAllCurrencies().let {
+            ResourceState.Success(it)
+        }
 
-    override suspend fun listCurrencies(): Flow<ResourceState<List<CurrencyResponse>>> {
-        return flow {
-            emit(getAllCurrencies())
-            emit(ResourceState.Loading)
-            when (
-                val response = safeApiCall {
-                    apiService.currencies(Constants.API_KEY)
-                }
-            ) {
-                is ResourceState.Loading -> {
-                    Timber.d("Loading")
-                    emit(ResourceState.Loading)
-                }
-                is ResourceState.Success -> {
-                    appDatabase.withTransaction {
-                        val data = response.data
-                        appDatabase.currencyDao.deleteAll()
-                        data?.let {
-                            appDatabase.currencyDao.insertCurrency(it)
-                        }
-                    }
-                    emit(ResourceState.Success(currencyDao.getAllCurrencies()))
-                    Timber.d("${currencyDao.getAllCurrencies()}")
-                }
-                is ResourceState.Error -> {
-                    Timber.d("Error ${response.response?.error?.message}")
-                    emit(ResourceState.Error(response.code, response.response))
-                }
-                is ResourceState.NetworkError -> {
-                    Timber.d("Network ${response.error}")
-                    emit(ResourceState.NetworkError(response.error))
-                }
+    override suspend fun listCurrencies(): Flow<ResourceState<List<CurrencyResponse>>> = flow {
+        emit(getAllCurrencies())
+        emit(ResourceState.Loading)
+        when (
+            val response = safeApiCall {
+                apiService.currencies(Constants.API_KEY)
             }
-        }.flowOn(Dispatchers.IO)
-    }
+        ) {
+            is ResourceState.Loading -> {
+                Timber.d("Loading")
+                emit(ResourceState.Loading)
+            }
+            is ResourceState.Success -> {
+                appDatabase.withTransaction {
+                    val data = response.data
+                    data?.let {
+                        currencyDao.deleteAll()
+                        currencyDao.insertCurrency(it)
+                    }
+                }
+                emit(ResourceState.Success(currencyDao.getAllCurrencies()))
+                Timber.d("${currencyDao.getAllCurrencies()}")
+            }
+            is ResourceState.Error -> {
+                Timber.d("Error ${response.response?.error?.message}")
+                emit(ResourceState.Error(response.code, response.response))
+            }
+            is ResourceState.NetworkError -> {
+                Timber.d("Network ${response.error}")
+                emit(ResourceState.NetworkError(response.error))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
 
     override fun exchangeRates(
         from: String?,

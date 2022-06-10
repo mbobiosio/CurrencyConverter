@@ -13,6 +13,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.mbobiosio.currencyconverter.domain.model.Rates
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 
 /**
  * @Author Mbuodile Obiosio
@@ -96,3 +98,25 @@ fun EditText.onAction(action: Int, runAction: () -> Unit) {
         }
     }
 }
+/**
+* [Moshi] extension to transform a [Map] to Json
+* */
+inline fun <reified T, reified K> Moshi.mapToJson(data: Map<T, K>): String =
+    adapter<Map<T, K>>(
+        Types.newParameterizedType(
+            MutableMap::class.java,
+            T::class.java, K::class.java
+        )
+    ).toJson(data)
+
+/**
+* [Moshi] extension to transform a json to [Map]
+* */
+inline fun <reified T, reified K> Moshi.jsonToMap(json: String): Map<T, K>? =
+    adapter<Map<T, K>>(
+        Types.newParameterizedType(
+            MutableMap::class.java,
+            T::class.java,
+            K::class.java
+        )
+    ).fromJson(json)

@@ -1,6 +1,5 @@
-package com.mbobiosio.currencyconverter.network
+package com.mbobiosio.currencyconverter.domain
 
-import com.mbobiosio.currencyconverter.domain.ResourceState
 import com.mbobiosio.currencyconverter.domain.model.Error
 import com.mbobiosio.currencyconverter.domain.model.ErrorResponse
 import com.squareup.moshi.Moshi
