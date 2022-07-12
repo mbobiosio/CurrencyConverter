@@ -68,18 +68,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupNav() {
-        with(binding) {
-            bottomNavigationView.setupWithNavController(navController)
-            bottomNavigationView.setOnItemReselectedListener { }
+    private fun setupNav() = with(binding) {
+        bottomNavigationView.setupWithNavController(navController)
+        bottomNavigationView.setOnItemReselectedListener { }
 
-            visibleNavElements(navController, bottomNavigationView)
+        visibleNavElements(navController, bottomNavigationView)
 
-            navManager.setOnNavEvent {
-                val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostContainer)
-                val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
-                currentFragment?.navigateSafe(it)
-            }
+        navManager.setOnNavEvent {
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostContainer)
+            val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+            currentFragment?.navigateSafe(it)
         }
     }
 

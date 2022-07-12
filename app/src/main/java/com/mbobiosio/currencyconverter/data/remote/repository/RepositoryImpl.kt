@@ -26,22 +26,16 @@ class RepositoryImpl @Inject constructor(
 
     private val currencyDao = appDatabase.currencyDao
 
-    override suspend fun insertCurrency(currency: CurrencyResponse) {
+    override suspend fun insertCurrency(currency: CurrencyResponse) =
         currencyDao.insertCurrency(currency)
-    }
 
-    override suspend fun deleteItem(currency: CurrencyResponse) {
+    override suspend fun deleteItem(currency: CurrencyResponse) =
         currencyDao.deleteCurrency(currency)
-    }
 
-    override suspend fun deleteAll() {
-        currencyDao.deleteAll()
-    }
+    override suspend fun deleteAll() = currencyDao.deleteAll()
 
     override suspend fun getAllCurrencies(): ResourceState<List<CurrencyResponse>> =
-        currencyDao.getAllCurrencies().let {
-            ResourceState.Success(it)
-        }
+        ResourceState.Success(currencyDao.getAllCurrencies())
 
     override suspend fun listCurrencies(): Flow<ResourceState<List<CurrencyResponse>>> = flow {
         emit(getAllCurrencies())
