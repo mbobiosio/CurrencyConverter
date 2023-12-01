@@ -98,20 +98,22 @@ fun EditText.onAction(action: Int, runAction: () -> Unit) {
         }
     }
 }
+
 /**
-* [Moshi] extension to transform a [Map] to Json
-* */
+ * [Moshi] extension to transform a [Map] to Json
+ * */
 inline fun <reified T, reified K> Moshi.mapToJson(data: Map<T, K>): String =
     adapter<Map<T, K>>(
         Types.newParameterizedType(
             MutableMap::class.java,
-            T::class.java, K::class.java
+            T::class.java,
+            K::class.java
         )
     ).toJson(data)
 
 /**
-* [Moshi] extension to transform a json to [Map]
-* */
+ * [Moshi] extension to transform a json to [Map]
+ * */
 inline fun <reified T, reified K> Moshi.jsonToMap(json: String): Map<T, K>? =
     adapter<Map<T, K>>(
         Types.newParameterizedType(
@@ -120,3 +122,10 @@ inline fun <reified T, reified K> Moshi.jsonToMap(json: String): Map<T, K>? =
             K::class.java
         )
     ).fromJson(json)
+
+/*** Returns a new [MultiTypeBuilder] for the specified data class type.*/
+//inline fun <reified T : Any, reified E : Enum<E>> create(
+//   noinline computeViewType: ComputeViewType<T, E>
+//): MultiTypeBuilder<T, E> {
+//   return MultiTypeBuilder(T::class, computeViewType, fragment)
+//}

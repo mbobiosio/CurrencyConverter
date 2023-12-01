@@ -45,13 +45,12 @@ class RepositoryTest {
 
     @Test
     fun `test get currencies`() = runBlocking {
-        Mockito.`when`(currencyApi.currencies(Constants.API_KEY))
-            .thenReturn(TestData.getCurrencyListSuccessResponse())
+        Mockito.`when`(currencyApi.currencies(Constants.API_KEY)).thenReturn(TestData.getCurrencyListSuccessResponse())
 
-        val result = repository.listCurrencies().toList()
+        val result = repository.getAllCurrencies()
 
         Assert.assertNotNull(result)
-        // Assert.assertEquals(result.last(), TestData.getCurrencyListSuccessResponse())
+        Assert.assertEquals(result, TestData.getCurrencyListSuccessResponse())
     }
 
     @After

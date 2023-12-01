@@ -107,17 +107,8 @@ class CurrencyViewModelTest {
                 when (it) {
                     is ResourceState.Success -> {
                         val data = it.data
-                        data?.let {
-                            val currency = ConversionResponse(
-                                baseCurrencyCode = data.baseCurrencyCode,
-                                baseCurrencyName = data.baseCurrencyCode,
-                                amount = data.amount,
-                                updatedDate = data.updatedDate,
-                                rates = data.rates,
-                                status = data.status
-                            )
-
-                            val exchangeRates = viewModel.exchangeRates.value
+                        data?.let { rates ->
+                            val exchangeRates = rates.rates.values
                             Assert.assertNotNull(exchangeRates)
                             Assert.assertEquals(exchangeRates, TestData.currencyObj)
                         }
